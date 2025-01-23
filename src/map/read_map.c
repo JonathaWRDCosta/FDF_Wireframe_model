@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 01:40:53 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/23 01:58:19 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/01/23 03:26:11 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,16 @@ static int read_file(int fd, char **map)
     while ((r_bytes = read(fd, buf, BUFFER_SIZE)) > 0)
     {
         buf[r_bytes] = '\0';
-        *map = ft_strjoin(*map, buf);
+
+        if (*map == NULL)
+            *map = ft_strdup(buf);
+        else
+        {
+            char *temp = ft_strjoin(*map, buf);
+            free(*map);
+            *map = temp;
+        }
+
         if (!*map)
         {
             free(buf);
@@ -39,10 +48,7 @@ static int read_file(int fd, char **map)
 
     free(buf);
     if (r_bytes == -1)
-    {
-        ft_putstr_fd("Error: Failed to read the file.\n", FDF_STDERR);
         return (-1);
-    }
 
     return (0);
 }
