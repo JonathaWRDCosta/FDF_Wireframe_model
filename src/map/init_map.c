@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 01:41:44 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/23 03:04:41 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/01/23 03:21:46 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void calculate_map_properties(t_vars *vars)
 
 int init_map(t_vars *vars, char *filename)
 {
+    char *raw_map;
+
     raw_map = get_raw_map(filename);
     if (!raw_map)
     {
