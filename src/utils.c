@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 18:38:36 by jonatha           #+#    #+#             */
-/*   Updated: 2025/01/16 18:38:38 by jonatha          ###   ########.fr       */
+/*   Created: 2025/01/22 01:43:15 by jonathro          #+#    #+#             */
+/*   Updated: 2025/01/23 02:00:36 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,73 +15,65 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-// Converts a hexadecimal string to an unsigned integer
-unsigned int	atoi_hex(char *str)
+unsigned int atoi_hex(char *str)
 {
-	unsigned int	res;
-	int				val;
+    unsigned int result = 0;
+    int value;
 
-	if (!str || !*str)
-		return (0); // Return 0 for NULL or empty strings
+    while (*str)
+    {
+        if (ft_isdigit(*str))
+            value = *str - '0';
+        else if (*str >= 'a' && *str <= 'f')
+            value = *str - 'a' + 10;
+        else if (*str >= 'A' && *str <= 'F')
+            value = *str - 'A' + 10;
+        else
+            return (0);
 
-	res = 0;
-	while (*str)
-	{
-		if (ft_isdigit(*str))
-			val = *str - '0';
-		else if (*str >= 'a' && *str <= 'f')
-			val = *str - 'a' + 10;
-		else if (*str >= 'A' && *str <= 'F')
-			val = *str - 'A' + 10;
-		else
-		{
-			ft_putstr_fd("Error: Invalid hexadecimal character.\n", STDERR_FILENO);
-			return (0);
-		}
-		res = res * 16 + val;
-		str++;
-	}
-	return (res);
+        result = result * 16 + value;
+        str++;
+    }
+    return (result);
 }
 
-// Frees a 2D array of unsigned long values
-void	free_ulong_arr(unsigned long **arr)
+void free_ulong_arr(unsigned long **arr)
 {
-	size_t	i;
+    size_t i;
 
-	if (!arr)
-		return;
+    if (!arr)
+        return;
 
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
+    i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
 }
 
-// Frees a 2D array of strings
-void	free_str_arr(char **arr)
+
+void free_str_arr(char **arr)
 {
-	size_t	i;
+    size_t i;
 
-	if (!arr)
-		return;
+    if (!arr)
+        return;
 
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
+    i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
 }
 
-// Returns the absolute value of an integer
-int	abs(int n)
+
+int abs(int n)
 {
-	if (n < 0)
-		return (-n);
-	return (n);
+    if (n < 0)
+        return (-n);
+    return (n);
 }

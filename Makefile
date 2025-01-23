@@ -1,67 +1,64 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/01/16 17:14:26 by jonatha           #+#    #+#              #
-#    Updated: 2025/01/16 19:09:57 by jonatha          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME        = fdf
+NAME_BONUS  = fdf_bonus
 
-# Compiler and flags
-CC      = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes -Ilibraries/libft/include -Ilibraries/minilibx_macos -I/opt/X11/include
+INC_DIR     = includes
+LIB_DIR     = libraries
+SRC_DIR     = src
+BUILD_DIR   = build
 
-# Directories
-SRCDIR  = src
-OBJDIR  = obj
-LIBFTDIR = libraries/libft
-MLXDIR  = libraries/minilibx_macos
+LIBFT_DIR   = $(LIB_DIR)/libft
+LIBFT_INC   = $(LIBFT_DIR)/include
+LIBFT_LIB   = $(LIBFT_DIR)/lib
+LIBFT       = $(LIBFT_LIB)/libft.a
+MLX_DIR     = $(LIB_DIR)/minilibx-linux
+MLX         = $(MLX_DIR)/libmlx.a
 
-# Libraries
-LIBFT   = $(LIBFTDIR)/lib/libft.a
-MLX     = $(MLXDIR)/libmlx.a
-LIBS    = $(LIBFT) $(MLX) -framework OpenGL -framework AppKit
+VPATH       = src:src/map:src/render:src/window
+SRCS        = fdf.c utils.c \
+              init_map.c parse_map.c read_map.c \
+              init_renderer.c render_map.c render_utils.c transformations.c \
+              init_win.c win_hooks.c win_utils.c
+BONUS_SRCS  = $(SRCS:.c=_bonus.c)
+OBJS        = $(addprefix $(BUILD_DIR)/,$(SRCS:.c=.o))
+BONUS_OBJS  = $(addprefix $(BUILD_DIR)/,$(BONUS_SRCS:.c=.o))
 
-# Files
-NAME    = fdf
-SRC     = $(wildcard $(SRCDIR)/**/*.c $(SRCDIR)/*.c)
-OBJ     = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC))
+# Flags ajustados
+CFLAGS      = -Wall -Wextra -Werror -g -I$(INC_DIR) -I$(LIBFT_INC) -I$(MLX_DIR) -I/opt/homebrew/include
+LDFLAGS     = -L$(LIBFT_LIB) -L$(MLX_DIR) -L/opt/homebrew/lib
+LDLIBS      = -lm -lmlx -lft -lX11 -lXext
+RM          = rm -rf
 
-# Rules
 all: $(NAME)
 
-# Build the executable
-$(NAME): $(OBJ) $(LIBFT)
-	@$(MAKE) -C $(MLXDIR)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $@
-	@echo "✅ $(NAME) compiled successfully!"
-
-# Compile object files
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Build Libft
 $(LIBFT):
-	@$(MAKE) -C $(LIBFTDIR)
+	@make -C $(LIBFT_DIR)
 
-# Clean object files
+$(MLX):
+	@make -C $(MLX_DIR)
+
+$(BUILD_DIR):
+	mkdir -p $@
+
+$(BUILD_DIR)/%.o: %.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $^ -o $@
+
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME)
+
+$(NAME_BONUS): $(BONUS_OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LDFLAGS) $(LDLIBS) -o $(NAME_BONUS)
+
+bonus: $(NAME_BONUS)
+
 clean:
-	@rm -rf $(OBJDIR)
-	@$(MAKE) -C $(LIBFTDIR) clean
-	@$(MAKE) -C $(MLXDIR) clean
-	@echo "🧹 Cleaned object files."
+	$(RM) $(BUILD_DIR)
+	@make -C $(LIBFT_DIR) clean
+	@make -C $(MLX_DIR) clean
 
-# Clean everything
 fclean: clean
-	@rm -f $(NAME)
-	@$(MAKE) -C $(LIBFTDIR) fclean
-	@echo "🧹 Cleaned everything."
+	$(RM) $(NAME) $(NAME_BONUS)
+	@make -C $(LIBFT_DIR) fclean
 
-# Rebuild everything
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re

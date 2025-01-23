@@ -3,74 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 18:45:15 by jonatha           #+#    #+#             */
-/*   Updated: 2025/01/16 18:45:17 by jonatha          ###   ########.fr       */
+/*   Created: 2025/01/22 01:42:16 by jonathro          #+#    #+#             */
+/*   Updated: 2025/01/23 01:59:23 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// Extracts the Z (height) value from an encoded point
-unsigned long	get_z(unsigned long point)
+unsigned long get_z(unsigned long point)
 {
-	return (point >> 32);
+    return (point >> 32);
 }
 
-// Extracts the color value from an encoded point
-unsigned long	get_color(unsigned long point)
+unsigned long get_color(unsigned long point)
 {
-	return (point & COLOR_MASK);
+    return (point & COLOR_MASK);
 }
 
-// Sets initial camera properties based on map dimensions
-void	set_camera_props(t_vars *vars)
+void set_camera_props(t_camera *camera, t_map *map)
 {
-	double	width_distance;
-	double	height_distance;
+    double width_distance;
+    double height_distance;
 
-	// Calculate proportional distances for rows and columns
-	width_distance = (double)(PADDED_WIDTH) / vars->row_size;
-	height_distance = (double)(PADDED_HEIGHT) / vars->col_size;
+    if (!camera || !map || map->row_size == 0 || map->col_size == 0)
+    {
+        ft_putstr_fd("Error: Invalid camera or map properties.\n", FDF_STDERR);
+        return;
+    }
 
-	// Choose the smaller distance to maintain aspect ratio
-	vars->distance = (width_distance > height_distance)
-		? height_distance
-		: width_distance;
+    width_distance = (double)(PADDED_WIDTH) / map->row_size;
+    height_distance = (double)(PADDED_HEIGHT) / map->col_size;
 
-	// Initialize other camera properties
-	vars->height = 5;       // Elevation scaling factor
-	vars->zoom = 0.7;       // Zoom level
-	vars->x_y_coef = -0.4;  // Rotation around X-Y plane
-	vars->y_z_coef = -0.9;  // Rotation around Y-Z plane
-	vars->z_x_coef = 0;     // Rotation around Z-X plane
-	vars->map_x = 0;        // Horizontal offset
-	vars->map_y = 0;        // Vertical offset
+    if (width_distance > height_distance)
+    {
+        camera->distance = height_distance;
+    }
+    else
+    {
+        camera->distance = width_distance;
+    }
+    camera->height = 5.0;
+    camera->zoom = 0.7;
+    camera->x_y_coef = -0.4;
+    camera->y_z_coef = -0.9;
+    camera->z_x_coef = 0.0;
 }
 
-// Initializes a point with X, Y, Z coordinates
-void	set_point(t_point *point, int x, int y, int z)
+void set_point(t_point *point, int x, int y, int z)
 {
-	point->x = x;
-	point->y = y;
-	point->z = z;
+    point->x = x;
+    point->y = y;
+    point->z = z;
 }
 
-// Applies transformations to a point for rendering
-void	render_point(t_vars *vars, t_point *point)
+void render_point(t_vars *vars, t_point *point)
 {
-	// Scale and center the point based on the map's anchor and distance
-	point->x = (point->x - vars->anchor_x) * vars->distance;
-	point->y = (point->y - vars->anchor_y) * vars->distance;
-	point->z = point->z * vars->height;
+    t_camera *camera;
 
-	// Apply rotations
-	rotate_x_y(vars, point);
-	rotate_y_z(vars, point);
-	rotate_z_x(vars, point);
+    if (!vars || !point)
+    {
+        ft_putstr_fd("Error: Invalid vars or point in render_point.\n", FDF_STDERR);
+        return;
+    }
 
-	// Apply translation and zoom
-	translate(vars, point);
-	zoom(vars, point);
+    camera = &(vars->camera);
+
+    point->x = (point->x - vars->anchor_x) * camera->distance;
+    point->y = (point->y - vars->anchor_y) * camera->distance;
+    point->z = point->z * camera->height;
+
+    rotate_x_y(camera, point);
+    rotate_y_z(camera, point);
+    rotate_z_x(camera, point);
+
+    zoom(camera, point);
+    translate(vars, point);
 }

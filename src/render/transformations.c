@@ -3,63 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   transformations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 18:53:47 by jonatha           #+#    #+#             */
-/*   Updated: 2025/01/16 18:54:08 by jonatha          ###   ########.fr       */
+/*   Created: 2025/01/22 01:42:36 by jonathro          #+#    #+#             */
+/*   Updated: 2025/01/23 01:40:07 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
 
-// Applies zoom to a point
-void	zoom(t_vars *vars, t_point *point)
+void zoom(t_camera *camera, t_point *point)
 {
-	if (vars->zoom <= 0)
-	{
-		ft_putstr_fd("Error: Zoom factor must be greater than 0.\n", STDERR_FILENO);
-		return;
-	}
+    if (!camera || !point)
+    {
+        ft_putstr_fd("Error: Invalid camera or point in zoom.\n", FDF_STDERR);
+        return;
+    }
 
-	point->x *= vars->zoom;
-	point->y *= vars->zoom;
-	point->z *= vars->zoom;
+    point->x *= camera->zoom;
+    point->y *= camera->zoom;
+    point->z *= camera->zoom;
 }
 
-// Translates a point by the specified offsets
-void	translate(t_vars *vars, t_point *point)
+void translate(t_vars *vars, t_point *point)
 {
-	point->x += vars->map_x;
-	point->y -= vars->map_y;
+    if (!vars || !point)
+    {
+        ft_putstr_fd("Error: Invalid vars or point in translate.\n", FDF_STDERR);
+        return;
+    }
+
+    point->x += vars->anchor_x;
+    point->y -= vars->anchor_y;
 }
 
-// Rotates a point around the Z-X plane
-void	rotate_z_x(t_vars *vars, t_point *point)
+void rotate_z_x(t_camera *camera, t_point *point)
 {
-	double	temp_z;
+    double original_z;
+    double original_x;
 
-	temp_z = point->z;
-	point->z = temp_z * cos(vars->z_x_coef) + point->x * -sin(vars->z_x_coef);
-	point->x = temp_z * sin(vars->z_x_coef) + point->x * cos(vars->z_x_coef);
+    if (!camera || !point)
+    {
+        ft_putstr_fd("Error: Invalid camera or point in rotate_z_x.\n", FDF_STDERR);
+        return;
+    }
+
+    original_z = point->z;
+    original_x = point->x;
+
+    point->z = original_z * cos(camera->z_x_coef) + original_x * -sin(camera->z_x_coef);
+    point->x = original_z * sin(camera->z_x_coef) + original_x * cos(camera->z_x_coef);
 }
 
-// Rotates a point around the Y-Z plane
-void	rotate_y_z(t_vars *vars, t_point *point)
+void rotate_y_z(t_camera *camera, t_point *point)
 {
-	double	temp_y;
+    double original_y;
+    double original_z;
 
-	temp_y = point->y;
-	point->y = point->z * sin(vars->y_z_coef) + temp_y * cos(vars->y_z_coef);
-	point->z = point->z * cos(vars->y_z_coef) + temp_y * -sin(vars->y_z_coef);
+    if (!camera || !point)
+    {
+        ft_putstr_fd("Error: Invalid camera or point in rotate_y_z.\n", FDF_STDERR);
+        return;
+    }
+
+    original_y = point->y;
+    original_z = point->z;
+
+    point->y = original_z * sin(camera->y_z_coef) + original_y * cos(camera->y_z_coef);
+    point->z = original_z * cos(camera->y_z_coef) + original_y * -sin(camera->y_z_coef);
 }
 
-// Rotates a point around the X-Y plane
-void	rotate_x_y(t_vars *vars, t_point *point)
+void rotate_x_y(t_camera *camera, t_point *point)
 {
-	double	temp_x;
+    double original_x;
+    double original_y;
 
-	temp_x = point->x;
-	point->x = temp_x * cos(vars->x_y_coef) + point->y * -sin(vars->x_y_coef);
-	point->y = temp_x * sin(vars->x_y_coef) + point->y * cos(vars->x_y_coef);
+    if (!camera || !point)
+    {
+        ft_putstr_fd("Error: Invalid camera or point in rotate_x_y.\n", FDF_STDERR);
+        return;
+    }
+
+    original_x = point->x;
+    original_y = point->y;
+
+    point->x = original_x * cos(camera->x_y_coef) + original_y * -sin(camera->x_y_coef);
+    point->y = original_x * sin(camera->x_y_coef) + original_y * cos(camera->x_y_coef);
 }
