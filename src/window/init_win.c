@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_win.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 18:47:37 by jonatha           #+#    #+#             */
-/*   Updated: 2025/01/16 18:47:55 by jonatha          ###   ########.fr       */
+/*   Created: 2025/01/23 01:59:39 by jonathro          #+#    #+#             */
+/*   Updated: 2025/01/23 01:59:41 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,84 +14,63 @@
 #include "mlx.h"
 #include <X11/Xlib.h>
 #include <stdlib.h>
-#include <stdio.h>
 
-// Sets image properties for rendering
-static int	set_img_props(t_mlx *mlx)
+static int handle_error(t_mlx *mlx)
 {
-	mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
-	if (!mlx->img_ptr)
-	{
-		ft_putstr_fd("Error: Failed to create image.\n", STDERR_FILENO);
-		destroy_win(mlx);
-		return (-1);
-	}
-
-	mlx->data_addr = mlx_get_data_addr(mlx->img_ptr, &mlx->bits_per_pixel,
-			&mlx->size_line, &mlx->endian);
-	if (!mlx->data_addr)
-	{
-		ft_putstr_fd("Error: Failed to get image data address.\n", STDERR_FILENO);
-		destroy_win(mlx);
-		return (-1);
-	}
-	return (0);
+    destroy_win(mlx);
+    return (-1);
 }
 
-// Sets window properties for the main application
-static int	set_win_props(t_mlx *mlx)
+static int set_img_props(t_mlx *mlx)
 {
-	mlx->mlx_ptr = mlx_init();
-	if (!mlx->mlx_ptr)
-	{
-		ft_putstr_fd("Error: Failed to initialize MiniLibX.\n", STDERR_FILENO);
-		destroy_win(mlx);
-		return (-1);
-	}
-
-	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, WIN_TITLE);
-	if (!mlx->win_ptr)
-	{
-		ft_putstr_fd("Error: Failed to create window.\n", STDERR_FILENO);
-		destroy_win(mlx);
-		return (-1);
-	}
-	return (0);
+    mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT);
+    if (!mlx->img_ptr)
+        return (handle_error(mlx));
+    mlx->data_addr = mlx_get_data_addr(mlx->img_ptr, &mlx->bits_per_pixel,
+            &mlx->size_line, &mlx->endian);
+    if (!mlx->data_addr)
+        return (handle_error(mlx));
+    return (0);
 }
 
-// Initializes the window and rendering context
-int	init_win(t_vars *vars)
+static int set_win_props(t_mlx *mlx)
 {
-	t_mlx	mlx;
+    mlx->mlx_ptr = mlx_init();
+    if (!mlx->mlx_ptr)
+        return (handle_error(mlx));
+    mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, WIN_WIDTH, WIN_HEIGHT, WIN_TITLE);
+    if (!mlx->win_ptr)
+        return (handle_error(mlx));
+    return (0);
+}
 
-	// Validate input
-	if (!vars)
-	{
-		ft_putstr_fd("Error: Invalid variables passed to init_win.\n", STDERR_FILENO);
-		return (-1);
-	}
+static void set_hooks(t_mlx *mlx)
+{
+    mlx_hook(mlx->win_ptr, DestroyNotify, 0, destroy_handler, mlx);
+    mlx_key_hook(mlx->win_ptr, key_handler, mlx);
+}
 
-	// Initialize variables
-	vars->mlx = &mlx;
-	mlx.mlx_ptr = NULL;
-	mlx.win_ptr = NULL;
-	mlx.img_ptr = NULL;
+int init_win(t_vars *vars)
+{
+    t_mlx mlx = {0};
 
-	// Set window and image properties
-	if (set_win_props(vars->mlx) == -1)
-		return (-1);
-	if (set_img_props(vars->mlx) == -1)
-		return (-1);
+    vars->mlx = &mlx;
 
-	// Set event hooks
-	mlx_hook(mlx.win_ptr, DestroyNotify, 0, destroy_handler, &mlx);
-	mlx_key_hook(mlx.win_ptr, key_handler, &mlx);
+    if (set_win_props(vars->mlx) == -1)
+        return (-1);
+    if (set_img_props(vars->mlx) == -1)
+        return (-1);
 
-	// Initialize the renderer and start the event loop
-	init_renderer(vars);
-	mlx_loop(mlx.mlx_ptr);
+    set_hooks(&mlx);
+    init_renderer(vars);
 
-	// Clean up resources
-	destroy_win(&mlx);
-	return (0);
+    if (mlx_loop(mlx.mlx_ptr) == -1)
+    {
+        ft_putstr_fd("Error: mlx_loop failed.\n", FDF_STDERR);
+        destroy_win(&mlx);
+        return (-1);
+    }
+
+    destroy_win(&mlx);
+    return (0);
 }

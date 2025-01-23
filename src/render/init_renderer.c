@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   init_renderer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 18:46:36 by jonatha           #+#    #+#             */
-/*   Updated: 2025/01/16 18:46:38 by jonatha          ###   ########.fr       */
+/*   Created: 2025/01/23 01:58:24 by jonathro          #+#    #+#             */
+/*   Updated: 2025/01/23 01:58:25 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// Initializes the rendering process
-void	init_renderer(t_vars *vars)
+void init_renderer(t_vars *vars)
 {
-	if (!vars || !vars->mlx)
-	{
-		ft_putstr_fd("Error: Invalid renderer variables.\n", STDERR_FILENO);
-		return;
-	}
+    if (!vars)
+    {
+        ft_putstr_fd("Error: vars is NULL in init_renderer.\n", FDF_STDERR);
+        return;
+    }
 
-	// Set initial camera properties
-	set_camera_props(vars);
+    ft_putstr_fd("Initializing renderer...\n", FDF_STDERR);
 
-	// Draw the background
-	draw_background(vars);
+    set_camera_props(&(vars->camera), &(vars->map));
+    ft_putstr_fd("Camera properties set.\n", FDF_STDERR);
 
-	// Render the map
-	render_map(vars);
+    draw_background(vars);
+    ft_putstr_fd("Background drawn.\n", FDF_STDERR);
 
-	ft_putstr_fd("Renderer initialized successfully.\n", STDOUT_FILENO);
+    render_map(vars);
+    ft_putstr_fd("Map rendered.\n", FDF_STDERR);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 18:28:56 by jonatha           #+#    #+#             */
-/*   Updated: 2025/01/16 18:29:48 by jonatha          ###   ########.fr       */
+/*   Created: 2025/01/22 01:41:44 by jonathro          #+#    #+#             */
+/*   Updated: 2025/01/23 03:04:41 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,58 +14,42 @@
 #include <stdlib.h>
 #include <limits.h>
 
-// Initializes map properties such as row/column size and anchor points
-static void	init_map_props(t_vars *vars)
+static void calculate_map_properties(t_vars *vars)
 {
-	int	i;
+    int row_length = 0;
+    int col_length = 0;
 
-	// Calculate row size (columns) from the first row
-	i = 0;
-	while (vars->map[0][i] != ULONG_MAX)
-		i++;
-	vars->row_size = i;
-	vars->anchor_x = i / 2;
+    while (vars->map.data[0][row_length] != ULONG_MAX)
+        row_length++;
 
-	// Calculate column size (rows)
-	i = 0;
-	while (vars->map[i])
-		i++;
-	vars->col_size = i;
-	vars->anchor_y = i / 2;
+    vars->map.row_size = row_length;
+    vars->anchor_x = row_length / 2;
+
+    while (vars->map.data[col_length])
+        col_length++;
+
+    vars->map.col_size = col_length;
+    vars->anchor_y = col_length / 2;
 }
 
-// Initializes the map by loading and parsing the given file
-int	init_map(t_vars *vars, char *filename)
+int init_map(t_vars *vars, char *filename)
 {
-	char	*raw_map;
+    raw_map = get_raw_map(filename);
+    if (!raw_map)
+    {
+        ft_putstr_fd("Error: Failed to read the map file.\n", FDF_STDERR);
+        return (-1);
+    }
 
-	// Validate input
-	if (!vars || !filename)
-	{
-		ft_putstr_fd("Error: Invalid parameters for map initialization.\n", STDERR_FILENO);
-		return (-1);
-	}
+    vars->map.data = split_raw_map(raw_map);
+    free(raw_map);
 
-	// Load the raw map as a string
-	raw_map = get_raw_map(filename);
-	if (!raw_map)
-	{
-		ft_putstr_fd("Error: Failed to load map file.\n", STDERR_FILENO);
-		return (-1);
-	}
+    if (!vars->map.data)
+    {
+        ft_putstr_fd("Error: Failed to parse the map.\n", FDF_STDERR);
+        return (-1);
+    }
 
-	// Convert the raw string to a 2D map
-	vars->map = split_raw_map(raw_map);
-	free(raw_map); // Free the raw map string
-	if (!vars->map)
-	{
-		ft_putstr_fd("Error: Failed to parse map.\n", STDERR_FILENO);
-		return (-1);
-	}
-
-	// Initialize map properties
-	init_map_props(vars);
-
-	ft_putstr_fd("Map initialized successfully.\n", STDOUT_FILENO);
-	return (0);
+    calculate_map_properties(vars);
+    return (0);
 }
