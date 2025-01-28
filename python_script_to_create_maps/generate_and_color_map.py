@@ -1,19 +1,38 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    colors.py                                          :+:      :+:    :+:    #
+#    generate_and_color_map.py                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/01/23 03:06:03 by jonathro          #+#    #+#              #
-#    Updated: 2025/01/23 03:06:53 by jonathro         ###   ########.fr        #
+#    Created: 2025/01/28 05:55:50 by jonathro          #+#    #+#              #
+#    Updated: 2025/01/28 05:55:52 by jonathro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 import sys
 import os
+from PIL import Image
+
+def generate_map_from_image(image_path, filename, size=100, max_height=30):
+    """
+    Generate an FDF map from an image.
+    Each pixel's brightness determines the altitude.
+    """
+    img = Image.open(image_path).convert("L")
+    img = img.resize((size, size))
+    with open(filename, "w") as f:
+        for y in range(img.height):
+            row = []
+            for x in range(img.width):
+                altitude = int((img.getpixel((x, y)) / 255) * max_height)
+                row.append(str(altitude))
+            f.write(" ".join(row) + "\n")
 
 def interpolate_color(value, min_val, max_val, start_color, end_color):
+    """
+    Interpolate between two colors based on a value's position between min_val and max_val.
+    """
     ratio = (value - min_val) / (max_val - min_val)
     start_r = (start_color >> 16) & 0xFF
     start_g = (start_color >> 8) & 0xFF
@@ -29,13 +48,10 @@ def interpolate_color(value, min_val, max_val, start_color, end_color):
 
     return (r << 16) + (g << 8) + b
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python add_colors_to_fdf.py <path_to_fdf_file>")
-        sys.exit(1)
-
-    input_path = sys.argv[1]
-
+def add_colors_to_fdf(input_path):
+    """
+    Add color to an existing FDF file based on elevation.
+    """
     if not os.path.isfile(input_path):
         print(f"Error: File '{input_path}' not found.")
         sys.exit(1)
@@ -88,6 +104,20 @@ def main():
         file.write("\n".join(processed_lines))
 
     print(f"Colored .fdf file saved as {output_path}")
+
+def main():
+    if len(sys.argv) != 3:
+        print("Usage: python generate_and_color_map.py <image_path> <fdf_output_path>")
+        sys.exit(1)
+
+    image_path = sys.argv[1]
+    fdf_output_path = sys.argv[2]
+
+    print("Generating FDF map from image...")
+    generate_map_from_image(image_path, fdf_output_path, size=100, max_height=40)
+
+    print("Adding colors to FDF map...")
+    add_colors_to_fdf(fdf_output_path)
 
 if __name__ == "__main__":
     main()

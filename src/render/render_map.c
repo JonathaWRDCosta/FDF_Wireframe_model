@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 01:58:31 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/23 01:58:31 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/01/28 03:54:47 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void put_pixel(t_vars *vars, int x, int y, unsigned long color)
         vars->mlx->data_addr[++i] = color >> 8;
         vars->mlx->data_addr[++i] = color >> 16;
     }
+    printf("Pixel -> X: %d, Y: %d, Cor: %#lx\n", x, y, color);
 }
 
 static void draw_line(t_vars *vars, t_point p1, t_point p2, unsigned long color)
