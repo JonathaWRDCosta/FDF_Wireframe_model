@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   win_hooks_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 03:28:28 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/28 03:28:29 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/01/29 00:57:43 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,17 @@ int	animation_loop(t_vars *vars)
 {
 	if (!vars || !vars->mlx || !vars->mlx->mlx_ptr || !vars->mlx->win_ptr)
 		return (0); // Verifica se os ponteiros necessários são válidos
-
 	if (vars->is_animating)
 	{
 		mlx_clear_window(vars->mlx->mlx_ptr, vars->mlx->win_ptr);
-
 		// Atualiza o coeficiente de rotação
 		vars->z_x_coef += ANIMATION_STEP;
-
 		// Redesenha a janela
 		draw_background(vars);
 		render_map(vars);
-
 		// Coloca a imagem atualizada na janela
 		mlx_put_image_to_window(vars->mlx->mlx_ptr, vars->mlx->win_ptr,
 			vars->mlx->banner_img_ptr, 0, 0);
-
 		// Adiciona um pequeno atraso para controlar a taxa de atualização
 		usleep(ANIMATION_DELAY);
 	}
@@ -45,7 +40,6 @@ int	destroy_handler(t_mlx *mlx)
 	mlx_loop_end(mlx->mlx_ptr);
 	return (0);
 }
-
 
 static void	transformation_keys(int keycode, t_vars *vars)
 {
@@ -81,8 +75,7 @@ static void	reset_camera_props(t_vars *vars)
 static void	projection_keys(int keycode, t_vars *vars)
 {
 	if (!vars)
-		return; // Garante que vars não é nulo
-
+		return ; // Garante que vars não é nulo
 	if (keycode == XK_n)
 		vars->zoom += 0.1; // Aumenta o zoom
 	else if (keycode == XK_m && vars->zoom > 0.2)
@@ -108,7 +101,7 @@ static void	handle_exit(int keycode, t_vars *vars)
 	if (keycode == XK_Escape)
 	{
 		vars->is_animating = 0;
-		destroy_handler(vars->mlx); // Use a versão com o prefixo 
+		destroy_handler(vars->mlx); // Use a versão com o prefixo
 	}
 }
 
@@ -122,20 +115,16 @@ int	keypress_handler(int keycode, t_vars *vars)
 {
 	if (!vars || !vars->mlx)
 		return (0); // Evita segfaults se vars ou mlx forem inválidos
-
 	// Manipulação de teclas de transformação e projeção
 	transformation_keys(keycode, vars); // Use a versão renomeada
-	projection_keys(keycode, vars);    // Use a versão renomeada
-
+	projection_keys(keycode, vars);     // Use a versão renomeada
 	// Verifica teclas específicas (Escape e espaço)
 	handle_exit(keycode, vars);
 	toggle_animation(keycode, vars);
-
 	// Atualiza o fundo, renderiza o mapa e exibe na janela
 	draw_background(vars); // Use a versão renomeada
 	render_map(vars);      // Use a versão renomeada
 	mlx_put_image_to_window(vars->mlx->mlx_ptr, vars->mlx->win_ptr,
 		vars->mlx->banner_img_ptr, 0, 0);
-
 	return (0);
 }

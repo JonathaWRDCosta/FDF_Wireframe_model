@@ -6,7 +6,7 @@
 /*   By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 23:54:55 by jonatha          #+#    #+#             */
-/*   Updated: 2025/01/18 03:24:56 by jonatha          ###   ########.fr       */
+/*   Updated: 2025/01/29 00:53:23 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	read_file(int fd, char **map, char **buf)
 
 	if (!map || !buf)
 		return (-1);
-
 	*map = NULL;
 	r_bytes = 1;
 	while (r_bytes > 0)
@@ -39,7 +38,7 @@ static int	read_file(int fd, char **map, char **buf)
 		}
 		(*buf)[r_bytes] = '\0';
 		temp = ft_strjoin(*map, *buf); // Cria uma nova string concatenada
-		*map = temp;                  // Atualiza o mapa
+		*map = temp;                   // Atualiza o mapa
 		if (!*map)
 			return (-1); // Falha ao concatenar
 	}
@@ -54,17 +53,14 @@ char	*get_raw_map(char *filename)
 
 	if (!filename)
 		return (NULL); // Verifica se o nome do arquivo é válido
-
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (NULL); // Retorna NULL se não conseguir abrir o arquivo
-
 	if (read_file(fd, &map, &buf) == -1)
 	{
 		close(fd); // Fecha o descritor em caso de erro
 		return (NULL);
 	}
-	close(fd); // Fecha o descritor de arquivo após a leitura
+	close(fd);    // Fecha o descritor de arquivo após a leitura
 	return (map); // Retorna o mapa completo
 }
-
