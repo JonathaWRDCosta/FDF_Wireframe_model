@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transformations_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 03:29:09 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/28 03:29:11 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/01/29 00:57:12 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	rotate(double coef, double *a, double *b)
 void	zoom(t_vars *vars, t_point *point)
 {
 	if (!vars || !point)
-		return;
+		return ;
 	point->x *= vars->zoom;
 	point->y *= vars->zoom;
 	point->z *= vars->zoom;
@@ -34,7 +34,7 @@ void	zoom(t_vars *vars, t_point *point)
 void	translate(t_vars *vars, t_point *point)
 {
 	if (!vars || !point)
-		return;
+		return ;
 	point->x += vars->map_x;
 	point->y -= vars->map_y;
 }
@@ -45,8 +45,7 @@ void	rotate_z_x(t_vars *vars, t_point *point)
 	double	z;
 
 	if (!vars || !point)
-		return;
-
+		return ;
 	z = (double)point->z;
 	x = (double)point->x;
 	rotate(vars->z_x_coef, &z, &x);
@@ -60,7 +59,7 @@ void	rotate_y_z(t_vars *vars, t_point *point)
 	double	z;
 
 	if (!vars || !point)
-		return;
+		return ;
 	y = (double)point->y;
 	z = (double)point->z;
 	rotate(vars->y_z_coef, &y, &z);
@@ -74,7 +73,7 @@ void	rotate_x_y(t_vars *vars, t_point *point)
 	double	y;
 
 	if (!vars || !point)
-		return;
+		return ;
 	x = (double)point->x;
 	y = (double)point->y;
 	rotate(vars->x_y_coef, &x, &y);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 00:54:54 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/28 04:04:09 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/01/29 00:52:47 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ void	free_ulong_arr(unsigned long **arr)
 	size_t	i;
 
 	if (!arr)
-		return;
-
+		return ;
 	i = 0;
 	while (arr[i])
 	{
@@ -72,7 +71,7 @@ void	free_str_arr(char **arr)
 	size_t	i;
 
 	if (!arr)
-		return;
+		return ;
 	i = 0;
 	while (arr[i])
 	{

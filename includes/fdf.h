@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 01:55:44 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/23 02:08:08 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/01/29 00:58:30 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define FDF_H
 
 # include "libft.h"
-# include <stddef.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <math.h>
-# include <X11/keysym.h>
 # include <X11/X.h>
+# include <X11/keysym.h>
+# include <math.h>
+# include <stddef.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 // Tamanho da Janela
 # define WIN_WIDTH 1470
@@ -44,14 +44,14 @@
 // Struct para Gerenciamento do MiniLibX
 typedef struct s_mlx
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	void	*img_ptr;
-	char	*data_addr;
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
-}				t_mlx;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*img_ptr;
+	char			*data_addr;
+	int				bits_per_pixel;
+	int				size_line;
+	int				endian;
+}					t_mlx;
 
 // Struct para Propriedades do Mapa
 typedef struct s_map
@@ -59,66 +59,66 @@ typedef struct s_map
 	unsigned long	**data;
 	int				col_size;
 	int				row_size;
-}				t_map;
+}					t_map;
 
 // Struct para Propriedades da Câmera
 typedef struct s_camera
 {
-	double	distance;
-	double	height;
-	double	zoom;
-	double	x_y_coef;
-	double	y_z_coef;
-	double	z_x_coef;
-}				t_camera;
+	double			distance;
+	double			height;
+	double			zoom;
+	double			x_y_coef;
+	double			y_z_coef;
+	double			z_x_coef;
+}					t_camera;
 
 // Struct para Representação de um Ponto
 typedef struct s_point
 {
-    int x;
-    int y;
-    int z;
-} t_point;
+	int				x;
+	int				y;
+	int				z;
+}					t_point;
 
 // Struct Principal do Programa
 typedef struct s_vars
 {
-	t_mlx		*mlx;
-	t_map		map;
-	t_camera	camera;
-	int			anchor_x;
-	int			anchor_y;
-	int			offset_x;
-	int			offset_y;
-}				t_vars;
+	t_mlx			*mlx;
+	t_map			map;
+	t_camera		camera;
+	int				anchor_x;
+	int				anchor_y;
+	int				offset_x;
+	int				offset_y;
+}					t_vars;
 
 // Prototipação das Funções
-int				init_map(t_vars *vars, char *filename);
-char			*get_raw_map(char *filename);
-unsigned long	**split_raw_map(char *raw_map);
+int					init_map(t_vars *vars, char *filename);
+char				*get_raw_map(char *filename);
+unsigned long		**split_raw_map(char *raw_map);
 
-void			init_renderer(t_vars *vars);
-void			render_map(t_vars *vars);
-void			set_camera_props(t_camera *camera, t_map *map);
-void			set_point(t_point *point, int x, int y, int z);
-void			render_point(t_vars *vars, t_point *point);
-void			zoom(t_camera *camera, t_point *point);
-void			translate(t_vars *vars, t_point *point);
-void			rotate_x_y(t_camera *camera, t_point *point);
-void			rotate_y_z(t_camera *camera, t_point *point);
-void			rotate_z_x(t_camera *camera, t_point *point);
+void				init_renderer(t_vars *vars);
+void				render_map(t_vars *vars);
+void				set_camera_props(t_camera *camera, t_map *map);
+void				set_point(t_point *point, int x, int y, int z);
+void				render_point(t_vars *vars, t_point *point);
+void				zoom(t_camera *camera, t_point *point);
+void				translate(t_vars *vars, t_point *point);
+void				rotate_x_y(t_camera *camera, t_point *point);
+void				rotate_y_z(t_camera *camera, t_point *point);
+void				rotate_z_x(t_camera *camera, t_point *point);
 
-void			draw_background(t_vars *vars);
-int				init_win(t_vars *vars);
-void			destroy_win(t_mlx *mlx);
-int				destroy_handler(t_mlx *mlx);
-int				key_handler(int keycode, t_mlx *mlx);
+void				draw_background(t_vars *vars);
+int					init_win(t_vars *vars);
+void				destroy_win(t_mlx *mlx);
+int					destroy_handler(t_mlx *mlx);
+int					key_handler(int keycode, t_mlx *mlx);
 
-void			free_str_arr(char **arr);
-void			free_ulong_arr(unsigned long **arr);
-unsigned long	get_z(unsigned long point);
-unsigned long	get_color(unsigned long point);
-unsigned int	atoi_hex(char *str);
-int				abs(int n);
+void				free_str_arr(char **arr);
+void				free_ulong_arr(unsigned long **arr);
+unsigned long		get_z(unsigned long point);
+unsigned long		get_color(unsigned long point);
+unsigned int		atoi_hex(char *str);
+int					abs(int n);
 
 #endif
