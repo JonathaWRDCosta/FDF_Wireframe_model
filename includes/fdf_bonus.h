@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 01:29:54 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/29 00:58:25 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/04 00:10:04 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
-# define WIN_TITLE "FdF by jonatha"
+# define WIN_TITLE "FdF by jonathro"
 # define ANIMATION_STEP 0.01
 # define ANIMATION_DELAY 10000
 # define SCALE 20 // Ajuste conforme necessário
@@ -115,5 +115,13 @@ unsigned long		get_z(unsigned long point);
 unsigned long		get_color(unsigned long point);
 unsigned int		atoi_hex(char *str);
 int					ft_abs(int n);
+void				toggle_animation(int keycode, t_vars *vars);
+void				handle_exit(int keycode, t_vars *vars);
+void				projection_keys(int keycode, t_vars *vars);
+void				reset_camera_props(t_vars *vars);
+void				transformation_keys(int keycode, t_vars *vars);
+int					setup_win_bonus(t_mlx *mlx);
+size_t				count_tokens(char **tokens);
+unsigned long		**build_map_from_lines(char **lines);
 
 #endif

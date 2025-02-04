@@ -6,7 +6,7 @@
 /*   By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 23:46:59 by jonatha          #+#    #+#             */
-/*   Updated: 2025/01/29 00:51:09 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/03 00:19:37 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_vars	vars;
 
-	vars = {0};
+	vars = (t_vars){0};
 	if (argc != 2)
 	{
 		ft_putstr_fd("Usage: ./fdf_bonus <filename>\n", FDF_STDERR);

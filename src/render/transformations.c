@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 01:42:36 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/29 00:57:18 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/04 00:14:11 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	rotate_z_x(t_camera *camera, t_point *point)
 	}
 	original_z = point->z;
 	original_x = point->x;
-	point->z = original_z * cos(camera->z_x_coef) + original_x *
-		-sin(camera->z_x_coef);
+	point->z = original_z * cos(camera->z_x_coef) + original_x
+		* -sin(camera->z_x_coef);
 	point->x = original_z * sin(camera->z_x_coef) + original_x
 		* cos(camera->z_x_coef);
 }
@@ -71,8 +71,8 @@ void	rotate_y_z(t_camera *camera, t_point *point)
 	original_z = point->z;
 	point->y = original_z * sin(camera->y_z_coef) + original_y
 		* cos(camera->y_z_coef);
-	point->z = original_z * cos(camera->y_z_coef) + original_y *
-		-sin(camera->y_z_coef);
+	point->z = original_z * cos(camera->y_z_coef) + original_y
+		* -sin(camera->y_z_coef);
 }
 
 void	rotate_x_y(t_camera *camera, t_point *point)
@@ -88,8 +88,8 @@ void	rotate_x_y(t_camera *camera, t_point *point)
 	}
 	original_x = point->x;
 	original_y = point->y;
-	point->x = original_x * cos(camera->x_y_coef) + original_y *
-		-sin(camera->x_y_coef);
+	point->x = original_x * cos(camera->x_y_coef) + original_y
+		* -sin(camera->x_y_coef);
 	point->y = original_x * sin(camera->x_y_coef) + original_y
 		* cos(camera->x_y_coef);
 }

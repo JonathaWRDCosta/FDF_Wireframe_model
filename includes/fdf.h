@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonathro <jonathro@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 01:55:44 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/29 00:58:30 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/04 00:16:05 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <unistd.h>
 
 // Tamanho da Janela
-# define WIN_WIDTH 1470
-# define WIN_HEIGHT 956
+# define WIN_WIDTH 1980
+# define WIN_HEIGHT 1080
 # define WIN_TITLE "FdF by jonatha"
 
 // Tamanhos de Padding para Ajustes
@@ -120,5 +120,7 @@ unsigned long		get_z(unsigned long point);
 unsigned long		get_color(unsigned long point);
 unsigned int		atoi_hex(char *str);
 int					abs(int n);
+unsigned long		*get_map_row(char *map_row);
+unsigned long		**build_map_from_lines(char **lines);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 03:29:24 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/29 00:55:20 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/03 00:34:10 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,25 @@ static void	draw_line(t_vars *vars, t_point p1, t_point p2, unsigned long color)
 {
 	double	x0;
 	double	y0;
-	double	dx;
-	double	dy;
 	int		steps;
-	int		i;
+	double	x_inc;
+	double	y_inc;
 
-	if (!vars)
-		return ;
-	dx = p2.x - p1.x;
-	dy = p2.y - p1.y;
-	if (ft_abs(dx) > ft_abs(dy))
-		steps = ft_abs(dx);
-	else
-		steps = ft_abs(dy);
 	x0 = p1.x;
 	y0 = p1.y;
-	i = 0;
-	while (i <= steps)
+	steps = abs(p2.y - p1.y);
+	if (abs(p2.x - p1.x) > steps)
+		steps = abs(p2.x - p1.x);
+	if (steps == 0)
+		return ;
+	x_inc = (p2.x - p1.x) / (double)steps;
+	y_inc = (p2.y - p1.y) / (double)steps;
+	while (steps >= 0)
 	{
 		put_pixel(vars, (int)x0, (int)y0, color);
-		x0 += dx / (double)steps;
-		y0 += dy / (double)steps;
-		i++;
+		x0 += x_inc;
+		y0 += y_inc;
+		steps--;
 	}
 }
 
