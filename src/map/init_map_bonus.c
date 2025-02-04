@@ -35,11 +35,11 @@ static int	get_col_size(unsigned long **map)
 static void	init_map_props(t_vars *vars)
 {
 	if (!vars || !vars->map || !vars->map[0])
-		return ;\
-	vars->row_size = get_row_size(vars->map);\
-	vars->anchor_x = vars->row_size / 2;     
+		return ;
+	vars->row_size = get_row_size(vars->map);
+	vars->anchor_x = vars->row_size / 2;
 	vars->col_size = get_col_size(vars->map);
-	vars->anchor_y = vars->col_size / 2;     
+	vars->anchor_y = vars->col_size / 2;
 }
 
 int	init_map(t_vars *vars, char *filename)
@@ -48,7 +48,7 @@ int	init_map(t_vars *vars, char *filename)
 
 	if (!vars || !filename)
 		return (-1);
-	raw_map = get_raw_map(filename); 
+	raw_map = get_raw_map(filename);
 	if (!raw_map)
 		return (-1);
 	vars->map = split_raw_map(raw_map);

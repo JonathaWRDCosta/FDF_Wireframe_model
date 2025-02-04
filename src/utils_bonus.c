@@ -6,16 +6,11 @@
 /*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 00:54:54 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/29 00:52:47 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/03 00:17:45 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_bonus.h"
-
-static int	ft_is_valid_hex_char(char c)
-{
-	return (ft_isdigit(c) || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'));
-}
 
 static int	ft_hex_char_to_decimal(char c)
 {
@@ -40,9 +35,9 @@ unsigned int	atoi_hex(char *str)
 		str += 2;
 	while (*str)
 	{
-		if (!ft_is_valid_hex_char(*str))
-			return (0);
 		val = ft_hex_char_to_decimal(*str);
+		if (val == -1)
+			return (0);
 		res = res * 16 + val;
 		str++;
 	}

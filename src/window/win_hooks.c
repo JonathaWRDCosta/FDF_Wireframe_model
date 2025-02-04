@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 01:59:53 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/29 00:57:50 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/03 00:57:21 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,13 @@ int	key_handler(int keycode, t_mlx *mlx)
 			FDF_STDERR);
 		return (1);
 	}
-	switch (keycode)
+	if (keycode == XK_Escape)
 	{
-	case XK_Escape:
 		destroy_handler(mlx);
-		break ;
-	default:
+	}
+	else
+	{
 		ft_putstr_fd("Info: Unhandled key pressed.\n", FDF_STDERR);
-		break ;
 	}
 	return (0);
 }

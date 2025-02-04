@@ -6,110 +6,25 @@
 /*   By: jonatha <jonatha@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 23:54:56 by jonatha          #+#    #+#             */
-/*   Updated: 2025/01/29 00:53:08 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/03 02:07:29 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf_bonus.h"
-
-static size_t	ulong_arr_len(unsigned long *arr)
-{
-	size_t	i;
-
-	if (!arr)
-		return (0);
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
-}
-
-static unsigned long	get_point(char *point)
-{
-	unsigned long	ret;
-	unsigned int	color;
-	char			**point_attrs;
-	int				z;
-
-	if (!point)
-		return (ULONG_MAX);
-	point_attrs = ft_split(point, ',');
-	if (!point_attrs)
-		return (ULONG_MAX);
-	z = ft_atoi(point_attrs[0]);
-	if (*(point_attrs + 1))
-		color = atoi_hex(*(point_attrs + 1));
-	else
-		color = LINE_COLOR;
-	ret = (((unsigned long)z) << 32) | color;
-	free_str_arr(point_attrs);
-	return (ret);
-}
-
-static unsigned long	*get_map_row(char *map_row)
-{
-	unsigned long	*row;
-	char			**str_row;
-	size_t			row_len;
-	size_t			i;
-
-	if (!map_row)
-		return (NULL);
-	str_row = ft_split(map_row, ' ');
-	if (!str_row)
-		return (NULL);
-	row_len = ulong_arr_len((unsigned long *)str_row);
-	row = malloc(sizeof(unsigned long) * (row_len + 1));
-	if (!row)
-	{
-		free_str_arr(str_row);
-		return (NULL);
-	}
-	i = 0;
-	while (str_row[i])
-	{
-		row[i] = get_point(str_row[i]);
-		i++;
-	}
-	row[row_len] = ULONG_MAX;
-	free_str_arr(str_row);
-	return (row);
-}
+#include "libft.h"
+#include <stdlib.h>
 
 unsigned long	**split_raw_map(char *raw_map)
 {
 	unsigned long	**map;
-	char			**str_map;
-	size_t			col_size;
-	size_t			i;
+	char			**lines;
 
 	if (!raw_map)
 		return (NULL);
-	str_map = ft_split(raw_map, '\n');
-	if (!str_map)
+	lines = ft_split(raw_map, '\n');
+	if (!lines)
 		return (NULL);
-	col_size = ulong_arr_len((unsigned long *)str_map);
-	map = malloc((col_size + 1) * sizeof(unsigned long *));
-	if (!map)
-	{
-		free_str_arr(str_map);
-		return (NULL);
-	}
-	i = 0;
-	while (i < col_size)
-	{
-		map[i] = get_map_row(str_map[i]);
-		if (!map[i])                     
-		{
-			while (i > 0)
-				free(map[--i]);
-			free(map);
-			free_str_arr(str_map);
-			return (NULL);
-		}
-		i++;
-	}
-	map[col_size] = NULL;
-	free_str_arr(str_map);
+	map = build_map_from_lines(lines);
+	free_str_arr(lines);
 	return (map);
 }

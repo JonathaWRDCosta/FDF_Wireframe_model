@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 01:58:31 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/29 00:56:12 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/04 00:14:16 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	put_pixel(t_vars *vars, int x, int y, unsigned long color)
 		vars->mlx->data_addr[++i] = color >> 8;
 		vars->mlx->data_addr[++i] = color >> 16;
 	}
-	printf("Pixel -> X: %d, Y: %d, Cor: %#lx\n", x, y, color);
 }
 
 static void	draw_line(t_vars *vars, t_point p1, t_point p2, unsigned long color)
@@ -51,17 +50,21 @@ static void	draw_line(t_vars *vars, t_point p1, t_point p2, unsigned long color)
 		return ;
 	x_inc = (p2.x - p1.x) / (double)steps;
 	y_inc = (p2.y - p1.y) / (double)steps;
-	for (int i = 0; i <= steps; i++)
+	while (steps >= 0)
 	{
 		put_pixel(vars, (int)x0, (int)y0, color);
 		x0 += x_inc;
 		y0 += y_inc;
+		steps--;
 	}
 }
 
 static void	set_lines(t_vars *vars, int x, int y, unsigned long point)
 {
-	t_point curr_point, left_point, top_point;
+	t_point	curr_point;
+	t_point	left_point;
+	t_point	top_point;
+
 	set_point(&curr_point, x, y, get_z(point));
 	render_point(vars, &curr_point);
 	if (x > 0 && vars->map.data[y][x - 1] != ULONG_MAX)
@@ -82,17 +85,24 @@ static void	set_lines(t_vars *vars, int x, int y, unsigned long point)
 
 void	render_map(t_vars *vars)
 {
+	int	i;
+	int	j;
+
 	if (!vars->map.data)
 	{
 		ft_putstr_fd("Error: Map data is NULL in render_map.\n", FDF_STDERR);
 		return ;
 	}
-	for (int i = 0; vars->map.data[i]; i++)
+	i = 0;
+	while (vars->map.data[i])
 	{
-		for (int j = 0; vars->map.data[i][j] != ULONG_MAX; j++)
+		j = 0;
+		while (vars->map.data[i][j] != ULONG_MAX)
 		{
 			set_lines(vars, j, i, vars->map.data[i][j]);
+			j++;
 		}
+		i++;
 	}
 	mlx_put_image_to_window(vars->mlx->mlx_ptr, vars->mlx->win_ptr,
 		vars->mlx->img_ptr, 0, 0);

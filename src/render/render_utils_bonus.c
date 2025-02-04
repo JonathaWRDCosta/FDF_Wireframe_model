@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 03:29:15 by jonathro          #+#    #+#             */
-/*   Updated: 2025/01/29 00:56:42 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/03 00:43:23 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	set_camera_props(t_vars *vars)
 		return ;
 	width_distance = (double)(PADDED_WIDTH) / vars->row_size;
 	height_distance = (double)(PADDED_HEIGHT) / vars->col_size;
-	vars->distance = (width_distance > height_distance) ? height_distance : width_distance;
+	if (width_distance > height_distance)
+		vars->distance = height_distance;
+	else
+		vars->distance = width_distance;
 	vars->height = -5;
 	vars->zoom = 0.7;
 	vars->x_y_coef = -0.4;
