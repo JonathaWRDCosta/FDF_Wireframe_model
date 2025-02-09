@@ -6,7 +6,7 @@
 /*   By: jonathro <jonathro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 01:55:44 by jonathro          #+#    #+#             */
-/*   Updated: 2025/02/04 00:16:05 by jonathro         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:54:54 by jonathro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 // Tamanho da Janela
 # define WIN_WIDTH 1980
 # define WIN_HEIGHT 1080
-# define WIN_TITLE "FdF by jonatha"
+# define WIN_TITLE "FdF by jonathro"
 
 // Tamanhos de Padding para Ajustes
 # define PADDED_WIDTH 1800
