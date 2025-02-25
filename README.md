@@ -1,6 +1,6 @@
 # FdF – 3D Wireframe Model
 
-![Alt Text](assets/fdf.gif)
+![Overview](https://i.imgur.com/II7IgPO.gif)
 <p align="center">
   <img src="assets/fdfm.png" alt="Alt Text" />
 </p>
@@ -159,13 +159,13 @@ The bonus flow builds upon the mandatory flow with these extra steps:
 ## Visual Examples
 
 - **Basic Wireframe View:**  
-  ![Basic Wireframe](assets/fdf_42.gif)
+  ![Basic Wireframe](https://imgur.com/mihWLpk.gif)
 
 - **Interactive Transformation (Rotation/Zoom):**  
-  ![Animation Example](assets/fdf_zoom.gif)
+  ![Animation Example](https://imgur.com/j4xlrzz.gif)
 
 - **Animation Active:**  
-  ![Animation Example](assets/fdf__trans.gif)
+  ![Animation Example](https://imgur.com/QCNi2t4.gif)
 
 ---
 
@@ -179,16 +179,11 @@ The bonus flow builds upon the mandatory flow with these extra steps:
 ## Credits
 
 - **Developed by:**  
-  *Your Name* – [Your Email or Profile]
+  *Jonatha Costa*
   
-- **Libraries and Resources:**  
+- **Libraries:**  
   - MiniLibX
-  - Libft (if applicable)
+  - Libft
   - Standard C libraries
-  - Documentation and examples on isometric and parallel projections
 
 ---
-
-This README provides a complete overview of the project flow—from reading and parsing the map to setting up a window with interactive transformations and animation. It clearly separates mandatory features from bonus enhancements, and includes sections for visual examples and demo videos.
-
-If you need any further adjustments or additional sections, feel free to ask!
