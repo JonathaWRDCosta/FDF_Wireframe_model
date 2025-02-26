@@ -1,6 +1,6 @@
 # FdF – 3D Wireframe Model
 
-![Overview](https://i.imgur.com/II7IgPO.gif)
+![Overview](https://dqg30ah6byc0i.cloudfront.net/m83jzl%2Fpreview%2F64851231%2Fmain_full.gif?response-content-disposition=inline%3Bfilename%3D%22main_full.gif%22%3B&response-content-type=image%2Fgif&Expires=1740534496&Signature=XJ1qaDuKeqZ9A0EU0Fz0rhq-dxRD~BlBrziau2o~2us8fdubOeTG5Y1ZND7erTRd5z0jkTgeKrdbhwQtOZolWkKlrkKf3U46U4bh0D7lZB3L0qHe-o2-aNphuwn8YUzhZIIoNbEX06UgjNvGXoiVmXgC0SBbTcEcT8-doB00FP5d8m9RuK5Echuu7hpl3ajWg5N~CW1lB-QCWdBLcq~fZRrhGV-2p12kO33F3Gmq~iGKoN3tubd2rPch-U9Wxu-fU3Wtjm0nn4KeQQDSnfr3A9DHq~gh0WbVBEXHCyWfhpLmfVoC5CMN6iG6dPwUvX6EIWx2tx~Tj1XuhcUxMfH12g__&Key-Pair-Id=APKAJT5WQLLEOADKLHBQ)
 <p align="center">
   <img src="assets/fdfm.png" alt="Alt Text" />
 </p>
@@ -23,7 +23,6 @@ This project creates a 3D wireframe representation of a landscape using isometri
   - [Project Structure \& Flow](#project-structure--flow)
     - [Mandatory Flow](#mandatory-flow)
     - [Bonus Flow](#bonus-flow)
-  - [Visual Examples](#visual-examples)
   - [Demo Videos](#demo-videos)
   - [Credits](#credits)
 
@@ -156,19 +155,19 @@ The bonus flow builds upon the mandatory flow with these extra steps:
 
 ---
 
-## Visual Examples
+<!-- ## Visual Examples
 
 - **Basic Wireframe View:**  
-  ![Basic Wireframe](https://i.imgur.com/mihWLpk.gif)
+  ![Basic Wireframe]()
 
 - **Interactive Transformation (Rotation/Zoom):**  
-  ![Animation Example](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2o2aDBlcnowNzNmaHlvNTdoMnZnMmM2cnc0MzZkeWd0ajd6d2pkcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aKs4KU8w1WR29SioT8/giphy.gif)
+  ![Animation Example]()
 
 - **Animation Active:**  
-  ![Animation Example](https://i.imgur.com/QCNi2t4.gif)
-
+  ![Animation Example]()
+ 
 ---
-
+-->
 ## Demo Videos
 
 - **General Demo: Interactivity & Animation**  
