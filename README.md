@@ -1,10 +1,11 @@
 # FdF – 3D Wireframe Model
+<p align="center">
+  <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemkydTk2aXlqNWx5d3NpZWJxNWhtcHVvcHRzYmxreXRicTlnc2RxZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WWN6dBK3pUltss3Jy7/giphy.gif" alt="Alt Text" />
+</p>
 
-![Overview](https://i.imgur.com/QCNi2t4.gif)
 <p align="center">
   <img src="assets/fdfm.png" alt="Alt Text" />
 </p>
-
 
 This project creates a 3D wireframe representation of a landscape using isometric projection. It reads a map file containing altitude (and optionally color) data, parses it into a 2D structure, and renders the scene interactively. In addition to the mandatory features, the bonus version adds enhanced interactivity, animation, and extra visual elements.
 
@@ -159,13 +160,13 @@ The bonus flow builds upon the mandatory flow with these extra steps:
 ## Visual Examples
 
 - **Basic Wireframe View:**  
-  ![Basic Wireframe](https://i.imgur.com/mihWLpk.gif)
+  ![Basic Wireframe](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemkydTk2aXlqNWx5d3NpZWJxNWhtcHVvcHRzYmxreXRicTlnc2RxZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WWN6dBK3pUltss3Jy7/giphy.gif)
 
 - **Interactive Transformation (Rotation/Zoom):**  
-  ![Animation Example](https://i.imgur.com/j4xlrzz.gif)
+  ![Animation Example](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2o2aDBlcnowNzNmaHlvNTdoMnZnMmM2cnc0MzZkeWd0ajd6d2pkcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aKs4KU8w1WR29SioT8/giphy.gif)
 
 - **Animation Active:**  
-  ![Animation Example](https://i.imgur.com/QCNi2t4.gif)
+  ![Animation Example](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXB4OXYwOGhrOXhhYmUxanl0OWdyeHFrM2ptOGs3Mjhta2JsNTNlMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ynJC9WVlVWfiL4ZMBP/giphy.gif)
 
 ---
 
