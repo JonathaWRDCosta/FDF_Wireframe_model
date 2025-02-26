@@ -1,6 +1,6 @@
 # FdF – 3D Wireframe Model
 
-![Overview](https://i.imgur.com/II7IgPO.gif)
+![Overview](https://i.imgur.com/QCNi2t4.mp4)
 <p align="center">
   <img src="assets/fdfm.png" alt="Alt Text" />
 </p>
@@ -159,13 +159,13 @@ The bonus flow builds upon the mandatory flow with these extra steps:
 ## Visual Examples
 
 - **Basic Wireframe View:**  
-  ![Basic Wireframe](https://imgur.com/mihWLpk.gif)
+  ![Basic Wireframe](https://i.imgur.com/mihWLpk.gif)
 
 - **Interactive Transformation (Rotation/Zoom):**  
-  ![Animation Example](https://imgur.com/j4xlrzz.gif)
+  ![Animation Example](https://i.imgur.com/j4xlrzz.gif)
 
 - **Animation Active:**  
-  ![Animation Example](https://imgur.com/QCNi2t4.gif)
+  ![Animation Example](https://i.imgur.com/QCNi2t4.gif)
 
 ---
 
