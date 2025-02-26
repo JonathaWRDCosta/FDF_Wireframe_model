@@ -1,6 +1,6 @@
 # FdF – 3D Wireframe Model
 
-![Overview](https://i.imgur.com/QCNi2t4.mp4)
+![Overview](https://i.imgur.com/QCNi2t4.gif)
 <p align="center">
   <img src="assets/fdfm.png" alt="Alt Text" />
 </p>
